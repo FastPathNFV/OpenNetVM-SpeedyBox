@@ -1,0 +1,115 @@
+#
+# As of version 0.99rc6, there are completely new rule options, your old rules
+# will no longer work with this new version
+#
+# A RULE MUST ONLY BE ON A SINGLE LINE, THE PARSER WILL NOT WORK ON MULTI-
+# LINE RULES!
+#
+# You can use "#" for comments
+#
+# USE NUMBERS FOR ALL IP ADDRESSES AND PORTS, THIS SYSTEM DOESN'T DO
+# LOOKUPS 
+#
+# The format of a rule is:
+# func proto src_ip/mask src_port_range -> dst_ip/mask dst_port_range (options)
+#
+# Use "any" for an IP address wildcard or port wildcard.  
+#
+# The rules are applied to traffic in the following order:
+# Alert Rules
+# Pass Rules
+# Log Rules
+#
+# The new rule options are enclosed in parenthesis and seperated by semi colons
+#
+# Valid rule options are:
+#   msg => message to output in the alert/log files
+#   flags => TCP flags, use 0 for no flags at all
+#   ttl => the TTL value you want to key on (nice for catching traceroutes)
+#   content => the packet application layer, look for buffer overflows here
+#   itype => the NUMBER of the ICMP type 
+#   icode => the NUMBER of the ICMP code
+#
+# Here are some examples:
+#
+
+# This rule logs telnet traffic from any computer on any network to a specific 
+# IP address on your (notional) network
+log tcp any any -> 192.168.1.1/32 23
+
+# This one logs all ICMP traffic to your local class C address.  Notice
+# the port Wildcards, even ICMP traffic needs to have something entered for 
+# ports so the rules parser doesn't get confused.
+log icmp any any -> 192.168.1.0/24 any
+
+# this rule will pass all outgoing web browsing done by your site 
+# bidirectionally.  Notice that these rules are all one way, so if you want to 
+# be able to log/ignore/alert about bidirectional traffic, you need two rules 
+# per action you want to perform!
+pass tcp any 80-> 192.168.1.0/24 any
+pass tcp 192.168.1.0/24 any -> any 80
+
+# This example shows what an alert rule looks like, with a "rule option" added
+# at the end of the rule:
+alert tcp 192.168.1.0/24 any -> any 111 (msg:"Portmapper call";)
+alert tcp any 111 -> 192.168.1.0/24 any (msg:"Portmapper call";)
+
+# We will now take a look at how port ranges are specified
+# This one logs all TCP traffic from anywhere to the local class C coming from
+# and going to ports below 1024
+log tcp any :1024 -> 192.168.1.0/24 :1024
+
+# This one monitors a port range (X Windows) from any computer to your class C
+log tcp any 6000:6010 -> 192.168.1.0/24 6000:6010
+
+# This one passes traffic to/from ports greater than 1024
+pass udp any 1024: -> 192.168.1.0/24 1024:
+
+# These next rules get into the options section of the rules
+# TCP flags can be searched on 
+# Flag values are as follows: 
+#             S = SYN
+#             F = FIN
+#             A = ACK
+#             U = URG
+#             P = PSH
+#             R = RST
+#             0 = NULL
+
+# This rule will find SYN FIN scans
+alert tcp any any -> 192.168.1.0/24 any (msg:"SYN-FIN scan!"; flags: SF;)
+
+# This one will find TCP NULL scans
+alert tcp any any -> 192.168.1.0/24 any (msg:"Null scan!"; flags: 0;)
+
+# Here is an example of content based alerting
+alert tcp any any -> 192.168.1.0/24 143 (msg:"IMAP Buffer overflow!"; content:"|90E8 C0FF FFFF|/bin/sh";)
+
+# The content string will be matched agains data contained in the application 
+# layer.  This string can be either binary or text, with the binary section 
+# denoted by the pipe "|" symbol.  The actual "binary" code is written using 
+# hex notation.  If you want to put a pipe symbol into the content match string,
+# just use "\|" and that will put a single "|" into the pattern buffer.
+
+# here's an example of PHF attack detection where just a straight text string
+# is searched for in the app layer
+alert tcp any any -> 192.168.1.0/24 80 (msg:"PHF attempt"; content:"/cgi-bin/phf";)
+
+# here's an example of straight binary code (of an external mountd access 
+# attempt) in the application layer
+alert tcp any any -> 192.168.1.0/24 111 (msg:"External mountd access"; content:"|00 01 86 A5|";)
+alert udp any any -> 192.168.1.0/24 111 (msg:"External mountd access"; content:"|00 01 86 A5|";)
+
+# here's an example of how to detect a traceroute using 99rc6's new ttl 
+# option capability
+alert udp any any -> 192.168.1.0/24 any (msg:"Traceroute"; ttl:1;)
+
+# here's an example of using the new itype and icode detection capability
+
+# this one will detect pings coming to your network from the outside 
+# (presumably)
+alert icmp any any -> 10.1.1.0/24 any (msg:"Being Pinged"; itype: 8;) 
+
+# this next one will detect ICMP host unreachables, which may be of interest in
+# certain situations
+alert icmp any any -> any any (msg:"Port Unreachable"; itype: 3; icode: 1;)
