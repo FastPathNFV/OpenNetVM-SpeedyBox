@@ -17,9 +17,9 @@ Using openNetVM-FastPath
       - `# ./go.sh 0,1,2,3,4,5,6 1 -p 3 -s stdout`
   2. Start NFs:
     - First, start up to n-1 simple_forward NFs.  For simplicity, we'll start one firewall NF.
-      - `# ./examples/fw_fp/go.sh 7 1 1`
+      - `# ./examples/fw_fp/go.sh 7 1 2`
     - Second, start up 1 load balancer NF and have it forward to service ID 2.
-      - `# ./examples/speed_tester/go.sh 14 2 2`
+      - `# ./examples/speed_tester/go.sh 8 2 2`
   3. We now have a NF service chain with firewall and load balancer.
 
 
