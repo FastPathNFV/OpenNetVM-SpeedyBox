@@ -173,8 +173,9 @@ packet_handler(struct rte_mbuf* pkt, struct onvm_pkt_meta* meta) {
                 counter = 0;
         }
 		uint32_t hash_fid;
-		unsigned int aaa = firewall_blk(pkt, blacklist, BLACKLIST_LENGTH);
-		hash_fid = NF_Get_FID(pkt)%10000;
+		unsigned int temp = firewall_blk(pkt, blacklist, BLACKLIST_LENGTH);
+		temp ++;
+		hash_fid = NF_Get_FID_NOFP(pkt);
 		LMAT[0] = hash_fid;
 		LMAT[1] = -1;//Action_Type, No Pkt Drop
 		LMAT[2] = 0;//Action_Field
@@ -183,10 +184,10 @@ packet_handler(struct rte_mbuf* pkt, struct onvm_pkt_meta* meta) {
 		LMAT[5] = nf_info->instance_id;//LMAT[5] means nf_id
 		LMAT[6] = 0;//LMAT[6] == 0 means Ideal output(ret_act == 0)
 		
-		meta->action = ONVM_NF_ACTION_OUT;
-        meta->destination = 1;//Port_ID
-        // meta->action = ONVM_NF_ACTION_TONF;
-        // meta->destination = destination;
+		// meta->action = ONVM_NF_ACTION_OUT;
+        // meta->destination = 1;//Port_ID
+        meta->action = ONVM_NF_ACTION_TONF;
+        meta->destination = destination;
         return LMAT;
 }
 
