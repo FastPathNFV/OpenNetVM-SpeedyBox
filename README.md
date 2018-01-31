@@ -8,7 +8,7 @@ openNetVM-FastPath is a NFV platform based on openNetVM, witch is an open source
 
 Installing
 --
-openNetVM-FastPath and openNetVM are installed in the same way. To install openNetVM-FastPath, please see the [openNetVM Installation][install] guide for a thorough walkthrough.
+openNetVM-FastPath and openNetVM are installed in the same way. To install openNetVM-FastPath, please see the [openNetVM-FastPath Installation][install] guide for a thorough walkthrough.
 
 Using openNetVM-FastPath
 --
