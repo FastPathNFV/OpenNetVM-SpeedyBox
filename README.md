@@ -1,4 +1,4 @@
-[openNetVM-FastPath]
+openNetVM-FastPath
 ==
 
 About
@@ -14,7 +14,7 @@ Using openNetVM-FastPath
 --
   1. Run Manager:
     - Run the manager in dynamic mode with the following command.  We are using a corelist here to manually pin the manager to specific cores, a portmask to decide which NIC ports to use, and configuring it display manager statistics to stdout:
-      - `# ./go.sh 0,1,2,3,4,5,6 1 -p 3 -s stdout
+      - `# ./go.sh 0,1,2,3,4,5,6 1 -p 3 -s stdout`
   2. Start NFs:
     - First, start up to n-1 simple_forward NFs.  For simplicity, we'll start one firewall NF.
       - `# ./examples/fw_fp/go.sh 7 1 1`
