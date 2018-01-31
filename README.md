@@ -26,5 +26,4 @@ Using openNetVM-FastPath
 [hotmiddlebox16]: http://faculty.cs.gwu.edu/timwood/papers/16-HotMiddlebox-onvm.pdf
 [nsdi04]: http://faculty.cs.gwu.edu/timwood/papers/14-NSDI-netvm.pdf
 [install]: docs/Install.md
-[examples]: docs/Examples.md
 [openNetVM]: https://github.com/sdnfv/openNetVM
