@@ -12,7 +12,15 @@ openNetVM-FastPath and openNetVM are installed in the same way. To install openN
 
 Using openNetVM-FastPath
 --
-To get started with some examples, please see the openNetVM [Example Uses][examples] guide.
+  1. Run Manager:
+    - Run the manager in dynamic mode with the following command.  We are using a corelist here to manually pin the manager to specific cores, a portmask to decide which NIC ports to use, and configuring it display manager statistics to stdout:
+      - `# ./go.sh 0,1,2,3,4,5,6 1 -p 3 -s stdout
+  2. Start NFs:
+    - First, start up to n-1 simple_forward NFs.  For simplicity, we'll start one firewall NF.
+      - `# ./examples/fw_fp/go.sh 7 1 1`
+    - Second, start up 1 load balancer NF and have it forward to service ID 2.
+      - `# ./examples/speed_tester/go.sh 14 2 2`
+  3. We now have a NF service chain with firewall and load balancer.
 
 
 [hotmiddlebox16]: http://faculty.cs.gwu.edu/timwood/papers/16-HotMiddlebox-onvm.pdf
