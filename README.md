@@ -3,12 +3,13 @@ openNetVM-FastPath
 
 About
 --
-openNetVM-FastPath is a NFV platform based on openNetVM, witch is an open source version of the NetVM platform described in [NSDI 2014 paper][nsdi04] and [HotMiddlebox 2016][hotmiddlebox16]. openNetVM-FastPath and openNetVM are installed and used in the same way. If you are familiar with openNetVM, you will finish installing and get started with openNetVM-FastPath easily. Installing and Using openNetVM-FastPath are followed, which are mainly copied from original page [openNetVM][openNetVM].
+openNetVM-FastPath is a NFV platform based on openNetVM, witch is an open source version of the NetVM platform described in [NSDI 2014 paper][nsdi04] and [HotMiddlebox 2016][hotmiddlebox16]. openNetVM-FastPath and openNetVM are installed and used in the same way. 
 
 
 Installing
 --
-openNetVM-FastPath and openNetVM are installed in the same way. To install openNetVM-FastPath, please see the [openNetVM-FastPath Installation][install] guide for a thorough walkthrough.
+
+You can follow the instrutions in [openNetVM-FastPath Installation][install] to install our system.
 
 Using openNetVM-FastPath
 --
@@ -20,7 +21,7 @@ Using openNetVM-FastPath
       - `# ./examples/fw_fp/go.sh 7 1 2`
     - Second, start up 1 load balancer NF and have it forward to NIC port 1.
       - `# ./examples/speed_tester/go.sh 8 2 2`
-  3. We now have a NF service chain with firewall and load balancer.
+  3. We now have a NF service chain with a firewall and followed by a load balancer.
 
 
 [hotmiddlebox16]: http://faculty.cs.gwu.edu/timwood/papers/16-HotMiddlebox-onvm.pdf
