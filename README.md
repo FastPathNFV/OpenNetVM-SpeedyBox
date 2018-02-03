@@ -1,8 +1,6 @@
 openNetVM-FastPath
 ==
 
-About
---
 openNetVM-FastPath is a NFV platform based on openNetVM, witch is an open source version of the NetVM platform described in [NSDI 2014 paper][nsdi04] and [HotMiddlebox 2016][hotmiddlebox16]. openNetVM-FastPath and openNetVM are installed and used in the same way. 
 
 
