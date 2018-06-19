@@ -1,7 +1,7 @@
-openNetVM-FastPath
+OpenNetVM-SpeedyBox
 ==
 
-openNetVM-FastPath is a NFV platform based on openNetVM, witch is an open source version of the NetVM platform described in [NSDI 2014 paper][nsdi04] and [HotMiddlebox 2016][hotmiddlebox16]. openNetVM-FastPath and openNetVM are installed and used in the same way. 
+OpenNetVM-SpeedyBox is a NFV platform based on openNetVM, witch is an open source version of the NetVM platform described in [NSDI 2014 paper][nsdi04] and [HotMiddlebox 2016][hotmiddlebox16]. openNetVM-SpeedyBox and openNetVM are installed and used in the same way. 
 
 
 Installing
